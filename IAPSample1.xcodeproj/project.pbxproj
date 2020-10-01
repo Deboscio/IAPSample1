@@ -65,13 +65,13 @@
 		8076D67D2513AC9A00B13912 /* IAPSample1 */ = {
 			isa = PBXGroup;
 			children = (
+				8076D67E2513AC9A00B13912 /* AppDelegate.swift */,
+				80832C962524BDB0002424CD /* Controllers */,
+				8076D6982513B06600B13912 /* IAPManager.swift */,
 				8076D6952513AD2D00B13912 /* IAPSample1.entitlements */,
 				8076D68C2513AC9B00B13912 /* Info.plist */,
-				80832C962524BDB0002424CD /* Controllers */,
-				80832C972524BDC1002424CD /* Views */,
-				8076D67E2513AC9A00B13912 /* AppDelegate.swift */,
-				8076D6982513B06600B13912 /* IAPManager.swift */,
 				80832C982524BDD1002424CD /* Resources */,
+				80832C972524BDC1002424CD /* Views */,
 			);
 			path = IAPSample1;
 			sourceTree = "<group>";
