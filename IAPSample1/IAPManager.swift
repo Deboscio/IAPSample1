@@ -142,17 +142,23 @@ extension IAPManager: SKPaymentTransactionObserver {
         return true
     }
     
+    func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
+        transactions.forEach {
+            debugPrint(info: "Transaction for product: \($0.payment.productIdentifier) removed from payment queue")
+        }
+    }
+    
     private func complete(transaction: SKPaymentTransaction) {
         deliverPurchaseNotification(for: transaction.payment.productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
-        print("Transaction for product: \(transaction.payment.productIdentifier) completed!")
+        debugPrint(info: "Transaction for product: \(transaction.payment.productIdentifier) completed!")
     }
     
     private func fail(transaction: SKPaymentTransaction) {
-        print("Transaction for product: \(transaction.payment.productIdentifier) failed")
+        debugPrint(info: "Transaction for product: \(transaction.payment.productIdentifier) failed")
         if let transactionError = transaction.error as NSError?,
             transactionError.code != SKError.paymentCancelled.rawValue {
-            print("Transaction Error: \(transactionError.localizedDescription)")
+            debugPrint(info: "Transaction Error: \(transactionError.localizedDescription)")
         }
         
         SKPaymentQueue.default().finishTransaction(transaction)
@@ -160,7 +166,7 @@ extension IAPManager: SKPaymentTransactionObserver {
     
     private func restore(transaction: SKPaymentTransaction) {
         guard let productId = transaction.original?.payment.productIdentifier else {return}
-        print("Restoring transaction for product: \(transaction.payment.productIdentifier)...")
+        debugPrint(info: "Restoring transaction for product: \(transaction.payment.productIdentifier)...")
         
         /// TODO: - Bisogna anche qui chiamare la `finishTransaction()` sulla paymentQueue?
         
@@ -168,10 +174,10 @@ extension IAPManager: SKPaymentTransactionObserver {
     }
     
     private func purchasing(transaction: SKPaymentTransaction) {
-        print("Purchasing product: \(transaction.payment.productIdentifier)...")
+        debugPrint(info: "Purchasing product: \(transaction.payment.productIdentifier)...")
     }
     private func deferred(transaction: SKPaymentTransaction) {
-        print("Transaction for product: \(transaction.payment.productIdentifier) deferred.")
+        debugPrint(info: "Transaction for product: \(transaction.payment.productIdentifier) deferred.")
     }
     
     
@@ -187,6 +193,10 @@ extension IAPManager: SKPaymentTransactionObserver {
         if UserDefaults.standard.bool(forKey: key) == false {
             UserDefaults.standard.set(true, forKey: key)
         }
+    }
+    
+    func debugPrint(info: String) {
+        print("[IAP MANAGER] " + info)
     }
 }
 
