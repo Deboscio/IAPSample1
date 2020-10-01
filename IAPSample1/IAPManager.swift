@@ -34,11 +34,15 @@ class Product: Codable {
     }
 }
 
+
+
 class IAPManager: NSObject {
     let productIdentifiers: Set<ProductIdentifier> = ["purchase1","purchase2","subscription1"]
     var purchasedProductIdentifiers: Set<ProductIdentifier> = []
     private var productsRequest: SKProductsRequest?
     private var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
+    
+    private let defaults = UserDefaults(suiteName: "iapManager")
     
     static let shared = IAPManager()
     
@@ -210,12 +214,12 @@ extension IAPManager: SKPaymentTransactionObserver {
     private func _saveProduct(withIdentifier key: String) {
         var newProduct: Product?
         
-        if let product = try? UserDefaults.standard.getObject(forKey: key, castTo: Product.self) {
+        if let product = try? defaults?.getObject(forKey: key, castTo: Product.self) {
             newProduct = Product(identifier: product.identifier, purchasedTimes: product.purchasedTimes+1)
         } else {
             newProduct = Product(identifier: key, purchasedTimes: 1)
         }
-        try? UserDefaults.standard.setObject(newProduct, forKey: key)
+        try? defaults?.setObject(newProduct, forKey: key)
     }
 }
 
