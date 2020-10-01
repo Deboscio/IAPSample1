@@ -20,8 +20,8 @@ extension Notification.Name {
 
 
 class IAPManager: NSObject {
-    private let productIdentifiers: Set<ProductIdentifier> = ["purchase1","purchase2","subscription1"]
-    private var purchasedProductIdentifiers: Set<ProductIdentifier> = []
+    let productIdentifiers: Set<ProductIdentifier> = ["purchase1","purchase2","subscription1"]
+    var purchasedProductIdentifiers: Set<ProductIdentifier> = []
     private var productsRequest: SKProductsRequest?
     private var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
     
