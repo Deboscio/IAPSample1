@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8008C6452525E89D00E4CC79 /* UserDefaultsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8008C6442525E89C00E4CC79 /* UserDefaultsExtension.swift */; };
 		8076D67F2513AC9A00B13912 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8076D67E2513AC9A00B13912 /* AppDelegate.swift */; };
 		8076D6832513AC9A00B13912 /* PurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8076D6822513AC9A00B13912 /* PurchasesViewController.swift */; };
 		8076D6862513AC9A00B13912 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8076D6842513AC9A00B13912 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8008C6442525E89C00E4CC79 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		8076D67B2513AC9A00B13912 /* IAPSample1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IAPSample1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8076D67E2513AC9A00B13912 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8076D6822513AC9A00B13912 /* PurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				8076D67E2513AC9A00B13912 /* AppDelegate.swift */,
 				80832C962524BDB0002424CD /* Controllers */,
 				8076D6982513B06600B13912 /* IAPManager.swift */,
+				8008C6442525E89C00E4CC79 /* UserDefaultsExtension.swift */,
 				8076D6952513AD2D00B13912 /* IAPSample1.entitlements */,
 				8076D68C2513AC9B00B13912 /* Info.plist */,
 				80832C982524BDD1002424CD /* Resources */,
@@ -186,6 +189,7 @@
 				8076D6992513B06600B13912 /* IAPManager.swift in Sources */,
 				8076D6832513AC9A00B13912 /* PurchasesViewController.swift in Sources */,
 				8076D67F2513AC9A00B13912 /* AppDelegate.swift in Sources */,
+				8008C6452525E89D00E4CC79 /* UserDefaultsExtension.swift in Sources */,
 				8076D69B2513B2B100B13912 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
