@@ -19,6 +19,21 @@ extension Notification.Name {
 }
 
 
+
+class Product: Codable {
+    let identifier: String
+    let purchasedTimes: Int
+    
+    var isPurchased: Bool {
+        return purchasedTimes > 0
+    }
+    
+    init(identifier: String, purchasedTimes: Int) {
+        self.identifier = identifier
+        self.purchasedTimes = purchasedTimes
+    }
+}
+
 class IAPManager: NSObject {
     let productIdentifiers: Set<ProductIdentifier> = ["purchase1","purchase2","subscription1"]
     var purchasedProductIdentifiers: Set<ProductIdentifier> = []
@@ -189,14 +204,15 @@ extension IAPManager: SKPaymentTransactionObserver {
         NotificationCenter.default.post(name: .IAPManagerPurchaseNotification, object: identifier)
     }
     
-    func saveProduct(withIdentifier key: String) {
-        if UserDefaults.standard.bool(forKey: key) == false {
-            UserDefaults.standard.set(true, forKey: key)
+    private func _saveProduct(withIdentifier key: String) {
+        var newProduct: Product?
+        
+        if let product = try? UserDefaults.standard.getObject(forKey: key, castTo: Product.self) {
+            newProduct = Product(identifier: product.identifier, purchasedTimes: product.purchasedTimes+1)
+        } else {
+            newProduct = Product(identifier: key, purchasedTimes: 1)
         }
-    }
-    
-    func debugPrint(info: String) {
-        print("[IAP MANAGER] " + info)
+        try? UserDefaults.standard.setObject(newProduct, forKey: key)
     }
 }
 
