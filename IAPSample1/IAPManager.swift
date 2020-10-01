@@ -86,11 +86,14 @@ class IAPManager: NSObject {
     public func restorePurchases() {
     }
     
-    private func clearRequestAndHandler() {
+    private func _clearRequestAndHandler() {
         productsRequest = nil
         productsRequestCompletionHandler = nil
     }
     
+    private func _debugPrint(info: String) {
+        print("[IAP MANAGER] " + info)
+    }
 }
 
 extension IAPManager: SKProductsRequestDelegate {
@@ -124,7 +127,7 @@ extension IAPManager: SKProductsRequestDelegate {
         print("Failed to load list of products.")
         print("Error: \(error.localizedDescription)")
         productsRequestCompletionHandler?(false, nil)
-        clearRequestAndHandler()
+        _clearRequestAndHandler()
     }
     
     func requestDidFinish(_ request: SKRequest) {
@@ -159,21 +162,21 @@ extension IAPManager: SKPaymentTransactionObserver {
     
     func paymentQueue(_ queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
         transactions.forEach {
-            debugPrint(info: "Transaction for product: \($0.payment.productIdentifier) removed from payment queue")
+            _debugPrint(info: "Transaction for product: \($0.payment.productIdentifier) removed from payment queue")
         }
     }
     
     private func complete(transaction: SKPaymentTransaction) {
-        deliverPurchaseNotification(for: transaction.payment.productIdentifier)
+        _deliverPurchaseNotification(for: transaction.payment.productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
-        debugPrint(info: "Transaction for product: \(transaction.payment.productIdentifier) completed!")
+        _debugPrint(info: "Transaction for product: \(transaction.payment.productIdentifier) completed!")
     }
     
     private func fail(transaction: SKPaymentTransaction) {
-        debugPrint(info: "Transaction for product: \(transaction.payment.productIdentifier) failed")
+        _debugPrint(info: "Transaction for product: \(transaction.payment.productIdentifier) failed")
         if let transactionError = transaction.error as NSError?,
             transactionError.code != SKError.paymentCancelled.rawValue {
-            debugPrint(info: "Transaction Error: \(transactionError.localizedDescription)")
+            _debugPrint(info: "Transaction Error: \(transactionError.localizedDescription)")
         }
         
         SKPaymentQueue.default().finishTransaction(transaction)
@@ -181,26 +184,26 @@ extension IAPManager: SKPaymentTransactionObserver {
     
     private func restore(transaction: SKPaymentTransaction) {
         guard let productId = transaction.original?.payment.productIdentifier else {return}
-        debugPrint(info: "Restoring transaction for product: \(transaction.payment.productIdentifier)...")
+        _debugPrint(info: "Restoring transaction for product: \(transaction.payment.productIdentifier)...")
         
         /// TODO: - Bisogna anche qui chiamare la `finishTransaction()` sulla paymentQueue?
         
-        deliverPurchaseNotification(for: productId)
+        _deliverPurchaseNotification(for: productId)
     }
     
     private func purchasing(transaction: SKPaymentTransaction) {
-        debugPrint(info: "Purchasing product: \(transaction.payment.productIdentifier)...")
+        _debugPrint(info: "Purchasing product: \(transaction.payment.productIdentifier)...")
     }
     private func deferred(transaction: SKPaymentTransaction) {
-        debugPrint(info: "Transaction for product: \(transaction.payment.productIdentifier) deferred.")
+        _debugPrint(info: "Transaction for product: \(transaction.payment.productIdentifier) deferred.")
     }
     
     
-    private func deliverPurchaseNotification(for identifier: String?) {
+    private func _deliverPurchaseNotification(for identifier: String?) {
         guard let identifier = identifier else {return}
         
         purchasedProductIdentifiers.insert(identifier)
-        saveProduct(withIdentifier: identifier)
+        _saveProduct(withIdentifier: identifier)
         NotificationCenter.default.post(name: .IAPManagerPurchaseNotification, object: identifier)
     }
     
